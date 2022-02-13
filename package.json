@@ -1,0 +1,33 @@
+{
+  "name": "ci_challenge",
+  "version": "1.0.0",
+  "description": "RESTful CRUD API with Node.js, Express and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RumbleInCybertron/ci_challenge.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "rest",
+    "api"
+  ],
+  "author": "Derek Haus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RumbleInCybertron/ci_challenge/issues"
+  },
+  "homepage": ".",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.2.1"
+  }
+}
