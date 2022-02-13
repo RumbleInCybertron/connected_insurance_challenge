@@ -14,7 +14,7 @@ export default class MoviesList extends Component {
       movies: [],
       currentMovie: null,
       currentIndex: -1,
-      searchName: ""
+      searchName: "",
     };
   }
   componentDidMount() {
@@ -23,18 +23,18 @@ export default class MoviesList extends Component {
   onChangeSearchName(e) {
     const searchName = e.target.value;
     this.setState({
-      searchName: searchName
+      searchName: searchName,
     });
   }
   retrieveMovies() {
+    this.setState({ moviesLoading: true });
     MovieDataService.getAll()
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
+      .then((response) => {
+        this.setState({ moviesLoading: false });
+        this.setState({ movies: response.data });
         console.log(response.data);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   }
@@ -42,34 +42,34 @@ export default class MoviesList extends Component {
     this.retrieveMovies();
     this.setState({
       currentMovie: null,
-      currentIndex: -1
+      currentIndex: -1,
     });
   }
   setActiveMovie(movie, index) {
     this.setState({
       currentMovie: movie,
-      currentIndex: index
+      currentIndex: index,
     });
   }
   removeAllMovies() {
     MovieDataService.deleteAll()
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.refreshList();
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   }
   searchName() {
     MovieDataService.findByName(this.state.searchName)
-      .then(response => {
+      .then((response) => {
         this.setState({
-          movies: response.data
+          movies: response.data,
         });
         console.log(response.data);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   }
@@ -100,6 +100,7 @@ export default class MoviesList extends Component {
         <div className="col-md-6">
           <h4>Movies List</h4>
           <ul className="list-group">
+            {this.state.moviesLoading && <div>Loading...</div>}
             {movies &&
               movies.map((movie, index) => (
                 <li
@@ -115,7 +116,7 @@ export default class MoviesList extends Component {
               ))}
           </ul>
           <button
-            className="m-3 btn btn-sm btn-danger"
+            className="mt-3 btn btn-sm btn-danger"
             onClick={this.removeAllMovies}
           >
             Remove All
@@ -136,6 +137,16 @@ export default class MoviesList extends Component {
                   <strong>Release Year:</strong>
                 </label>{" "}
                 {currentMovie.releaseYear}
+              </div>
+              <div>
+                <label>
+                  <strong>Director:</strong>
+                </label>{" "}
+                {!currentMovie._director ? (
+                  <span>No director listed.</span>
+                ) : (
+                  <span>{`${currentMovie._director.firstName} ${currentMovie._director.lastName}`}</span>
+                )}
               </div>
               <Link
                 to={"/movies/" + currentMovie.id}
